@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Life happens</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Today.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Today</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Life happens</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">Travel, illness, a festival, a busy week. Tell us, and the plan bends instead of breaking.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <sc-for list="{{events}}" as="e" hint-placeholder-count="4">
+        <button type="button" onClick="{{e.pick}}" style="{{e.style}}">{{e.text}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">FOR HOW LONG</div>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{lengths}}" as="l" hint-placeholder-count="3">
+          <button type="button" onClick="{{l.pick}}" style="{{l.style}}">{{l.text}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">WHAT CHANGES · {{plan.heading}}</div>
+      <sc-for list="{{plan.changes}}" as="c" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 2px; border-top: 1px solid #E3E6E0; padding-top: 10px">
+          <span style="font-size: 14px; font-weight: 800">{{c.what}}</span>
+          <span style="font-size: 13px; line-height: 1.4; color: #3C4A46">{{c.how}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="{{plan.noteStyle}}">{{plan.note}}</div>
+
+    <button type="button" onClick="{{apply}}" style="{{plan.btnStyle}}">{{plan.btnText}}</button>
+    <div style="text-align: center; font-size: 12px; color: #5B6763">Proposed changes. You can undo this any time. Sample data.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ ev: 'travel', len: 1, done: false }, this.state || {});
+    const EV = {
+      travel: { label: 'Travelling', heading: 'TRAVEL',
+        changes: [
+          { what: 'Training', how: 'Short hotel or home sessions with bodyweight and bands, 3 days a week, chest sets kept.' },
+          { what: 'Food', how: 'Protein first at every meal. Calorie target loosened to a range instead of a number.' },
+          { what: 'Movement', how: 'Walk after meals where you can. Steps goal lowered while on the road.' }
+        ], note: '', warn: false },
+      sick: { label: 'Unwell', heading: 'ILLNESS',
+        changes: [
+          { what: 'Training', how: 'Paused. We hold your program and resume at a lighter level when you feel normal.' },
+          { what: 'Food', how: 'Eat what you can. We stop pushing the calorie or protein target.' },
+          { what: 'Tracking', how: 'Weight changes are ignored for these days so the trend is not thrown off.' }
+        ], note: 'If you have fever, chest pain or trouble breathing, see a doctor. Do not train through it.', warn: true },
+      festival: { label: 'Festival or fasting', heading: 'FESTIVAL OR FASTING DAY',
+        changes: [
+          { what: 'Food', how: 'Log festive food as ranges. No guilt, no catching up by starving the next day.' },
+          { what: 'Protein', how: 'We suggest a few easy protein adds around the meal, like curd, paneer or dal where it fits.' },
+          { what: 'Training', how: 'Light session or a walk on the day. Normal plan the next day.' }
+        ], note: '', warn: false },
+      busy: { label: 'Busy week', heading: 'BUSY WEEK',
+        changes: [
+          { what: 'Training', how: 'Short on time versions, 30 to 45 minutes, with chest sets protected.' },
+          { what: 'Food', how: 'Quick high protein options and a short list of repeat meals.' },
+          { what: 'Review', how: 'Weekly review moves to a lighter check, so one rough week does not change your plan.' }
+        ], note: '', warn: false }
+    };
+    const KEYS = ['travel', 'sick', 'festival', 'busy'];
+    const LEN = [{ v: 3, t: '3 days' }, { v: 7, t: '1 week' }, { v: 14, t: '2 weeks' }];
+    const ev = KEYS.indexOf(st.ev) >= 0 ? st.ev : 'travel';
+    const cur = EV[ev];
+    const len = st.len;
+    const lenText = (LEN.filter((x) => x.v === len)[0] || LEN[0]).t;
+    const done = st.done;
+
+    return {
+      events: KEYS.map((k) => ({
+        text: EV[k].label,
+        style: (k === ev
+          ? 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F;'
+          : 'background: #fff; border: 2px solid #E3E6E0; color: #14201E;')
+          + ' font-family: inherit; font-size: 15px; font-weight: 800; border-radius: 14px; height: 52px; cursor: pointer',
+        pick: () => this.setState({ ev: k, done: false })
+      })),
+      lengths: LEN.map((l) => ({
+        text: l.t,
+        style: (l.v === len
+          ? 'background: #0E5A52; color: #fff; border: 0;'
+          : 'background: #fff; color: #3C4A46; border: 1px solid #D5DAD3;')
+          + ' flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; border-radius: 12px; height: 42px; cursor: pointer',
+        pick: () => this.setState({ len: l.v, done: false })
+      })),
+      apply: () => this.setState({ done: !done }),
+      plan: {
+        heading: cur.heading + ' · ' + lenText.toUpperCase(),
+        changes: cur.changes,
+        note: cur.note,
+        noteStyle: cur.note
+          ? 'background: #F6DCD5; color: #7A2314; border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.45; font-weight: 700'
+          : 'display: none',
+        btnText: done ? 'Applied for ' + lenText + '. Tap to undo' : 'Apply to my plan',
+        btnStyle: (done
+          ? 'background: #E1EFEC; color: #0B463F; border: 2px solid #0E5A52;'
+          : 'background: #0E5A52; color: #fff; border: 0;')
+          + ' font-family: inherit; font-size: 16px; font-weight: 800; border-radius: 14px; height: 52px; cursor: pointer'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

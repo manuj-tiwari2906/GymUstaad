@@ -1,0 +1,329 @@
+{
+  "v": 3,
+  "attachments": {},
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-05T21:40:00Z"
+  },
+  "title": "Fitness Coach App \u2014 MVP Mockups",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "1 Goal and basics"
+    },
+    "Photo.dc.html": {
+      "x": 470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "2 Photo with quality check"
+    },
+    "Diagnosis.dc.html": {
+      "x": 940,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "3 What is holding you back"
+    },
+    "Plan.dc.html": {
+      "x": 1410,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "4 Your program"
+    },
+    "Today.dc.html": {
+      "x": 1880,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "5 Today"
+    },
+    "FoodLog.dc.html": {
+      "x": 2350,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "6 Clean food logging",
+      "is_interactive": true
+    },
+    "Movement.dc.html": {
+      "x": 2820,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "7 Movement plan"
+    },
+    "Progress.dc.html": {
+      "x": 3290,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "8 Progress dashboard",
+      "is_interactive": true
+    },
+    "Review.dc.html": {
+      "x": 3760,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "9 Weekly review and case"
+    },
+    "Intake1.dc.html": {
+      "x": 0,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "10 Intake: your week"
+    },
+    "Intake2.dc.html": {
+      "x": 470,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "11 Intake: food and sleep"
+    },
+    "Intake3.dc.html": {
+      "x": 940,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "12 Intake: training history"
+    },
+    "Workout.dc.html": {
+      "x": 1410,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "13 Workout logging"
+    },
+    "Measure.dc.html": {
+      "x": 1880,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "14 Weight and measurements"
+    },
+    "Compare.dc.html": {
+      "x": 2350,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "15 Photo compare"
+    },
+    "Coach.dc.html": {
+      "x": 2820,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "16 Coach chat"
+    },
+    "Goal.dc.html": {
+      "x": 0,
+      "y": 2400,
+      "w": 390,
+      "h": 844,
+      "title": "17 Goal reached"
+    },
+    "Safety.dc.html": {
+      "x": 470,
+      "y": 2400,
+      "w": 390,
+      "h": 844,
+      "title": "18 Pain check"
+    },
+    "Settings.dc.html": {
+      "x": 940,
+      "y": 2400,
+      "w": 390,
+      "h": 844,
+      "title": "19 Settings and privacy"
+    },
+    "Paywall.dc.html": {
+      "x": 1410,
+      "y": 2400,
+      "w": 390,
+      "h": 844,
+      "title": "20 Plans"
+    },
+    "Notifs.dc.html": {
+      "x": 1880,
+      "y": 2400,
+      "w": 390,
+      "h": 844,
+      "title": "21 Reminders"
+    },
+    "States.dc.html": {
+      "x": 2350,
+      "y": 2400,
+      "w": 390,
+      "h": 844,
+      "title": "22 Empty and error states"
+    },
+    "Checkin.dc.html": {
+      "x": 0,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "23 Morning check-in",
+      "is_interactive": true
+    },
+    "Muscles.dc.html": {
+      "x": 470,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "24 Muscle map",
+      "is_interactive": true
+    },
+    "ShortTime.dc.html": {
+      "x": 940,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "25 Short on time",
+      "is_interactive": true
+    },
+    "EatNext.dc.html": {
+      "x": 1410,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "26 What should I eat next",
+      "is_interactive": true
+    },
+    "History.dc.html": {
+      "x": 1880,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "27 Why your plan changed",
+      "is_interactive": true
+    },
+    "Evidence.dc.html": {
+      "x": 2350,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "28 Evidence library",
+      "is_interactive": true
+    },
+    "LifeEvents.dc.html": {
+      "x": 2820,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "29 Life happens",
+      "is_interactive": true
+    },
+    "Allergies.dc.html": {
+      "x": 3290,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "30 Intake: food limits",
+      "is_interactive": true
+    },
+    "Unwell.dc.html": {
+      "x": 2820,
+      "y": 2400,
+      "w": 390,
+      "h": 844,
+      "title": "31 Not feeling well",
+      "is_interactive": true
+    },
+    "BloodReport.dc.html": {
+      "x": 3290,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "32 Blood report (post-MVP)",
+      "is_interactive": true
+    },
+    "DoctorSummary.dc.html": {
+      "x": 3760,
+      "y": 3500,
+      "w": 390,
+      "h": 844,
+      "title": "33 Summary for your doctor",
+      "is_interactive": true
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Photo.dc.html",
+    "Diagnosis.dc.html",
+    "Plan.dc.html",
+    "Today.dc.html",
+    "FoodLog.dc.html",
+    "Movement.dc.html",
+    "Progress.dc.html",
+    "Review.dc.html",
+    "Intake1.dc.html",
+    "Intake2.dc.html",
+    "Intake3.dc.html",
+    "Workout.dc.html",
+    "Measure.dc.html",
+    "Compare.dc.html",
+    "Coach.dc.html",
+    "Goal.dc.html",
+    "Safety.dc.html",
+    "Settings.dc.html",
+    "Paywall.dc.html",
+    "Notifs.dc.html",
+    "States.dc.html",
+    "Checkin.dc.html",
+    "Muscles.dc.html",
+    "ShortTime.dc.html",
+    "EatNext.dc.html",
+    "History.dc.html",
+    "Evidence.dc.html",
+    "LifeEvents.dc.html",
+    "Allergies.dc.html",
+    "Unwell.dc.html",
+    "BloodReport.dc.html",
+    "DoctorSummary.dc.html"
+  ],
+  "notes": {
+    "title": {
+      "x": 0,
+      "y": -260,
+      "text": "Core flow \u2014 assess, plan, track, review (sample data)",
+      "kind": "title1",
+      "maxW": 4150,
+      "w": 240
+    },
+    "title2": {
+      "x": 0,
+      "y": 1040,
+      "text": "Setup and daily logging",
+      "kind": "title1",
+      "maxW": 3680,
+      "w": 240
+    },
+    "title3": {
+      "x": 0,
+      "y": 2140,
+      "text": "Milestones and housekeeping",
+      "kind": "title1",
+      "maxW": 3210,
+      "w": 240
+    },
+    "title4": {
+      "x": 0,
+      "y": 3240,
+      "text": "Beyond the MVP \u2014 ideas to test after launch (interactive)",
+      "kind": "title1",
+      "maxW": 4150,
+      "w": 240
+    }
+  },
+  "designSystems": []
+}

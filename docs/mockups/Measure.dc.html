@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weight and measurements</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <a href="Progress.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Progress</a>
+    <h1 style="margin: 0; font-size: 26px; font-weight: 800">Weight and measurements</h1>
+  </div>
+
+  <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+    <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; color: #5B6763">TODAY'S WEIGHT (KG)
+      <input type="text" value="70.4" readonly style="font-family: inherit; font-size: 28px; font-weight: 800; color: #14201E; background: #F4F5F1; border: 2px solid #0E5A52; border-radius: 12px; height: 56px; box-sizing: border-box; padding: 0 14px; width: 100%">
+    </label>
+    <div style="font-size: 13px; line-height: 1.4; color: #3C4A46">7-day average: <strong>70.6 kg</strong>. One day moves with water and food, so we judge the average, not today.</div>
+  </div>
+
+  <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="font-size: 13px; font-weight: 800; color: #5B6763">WEEKLY TAPE (CM) · LAST WEEK IN GREY</div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: #5B6763">Chest
+        <input type="text" value="97.4" readonly style="font-family: inherit; font-size: 17px; font-weight: 800; color: #14201E; background: #F4F5F1; border: 1px solid #D5DAD3; border-radius: 10px; height: 44px; box-sizing: border-box; padding: 0 12px; width: 100%">
+        <span style="font-weight: 600; color: #8A9490">97.2</span>
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: #5B6763">Waist
+        <input type="text" value="81.0" readonly style="font-family: inherit; font-size: 17px; font-weight: 800; color: #14201E; background: #F4F5F1; border: 1px solid #D5DAD3; border-radius: 10px; height: 44px; box-sizing: border-box; padding: 0 12px; width: 100%">
+        <span style="font-weight: 600; color: #8A9490">80.8</span>
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: #5B6763">Upper arm (right)
+        <input type="text" value="33.5" readonly style="font-family: inherit; font-size: 17px; font-weight: 800; color: #14201E; background: #F4F5F1; border: 1px solid #D5DAD3; border-radius: 10px; height: 44px; box-sizing: border-box; padding: 0 12px; width: 100%">
+        <span style="font-weight: 600; color: #8A9490">33.3</span>
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: #5B6763">Thigh (right)
+        <input type="text" value="56.0" readonly style="font-family: inherit; font-size: 17px; font-weight: 800; color: #14201E; background: #F4F5F1; border: 1px solid #D5DAD3; border-radius: 10px; height: 44px; box-sizing: border-box; padding: 0 12px; width: 100%">
+        <span style="font-weight: 600; color: #8A9490">55.9</span>
+      </label>
+    </div>
+  </div>
+
+  <div style="background: #E1EFEC; border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.5; color: #0B463F">
+    <strong>For clean numbers:</strong> weigh in the morning after the toilet, before food. Measure tape on the same spot, same time of week, relaxed, not flexed.
+  </div>
+
+  <div style="flex: 1"></div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 52px; cursor: pointer">Save</button>
+    <div style="text-align: center; font-size: 12px; color: #5B6763">Sample data shown in this mockup</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Intake: your week</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <div style="font-size: 12px; font-weight: 700; color: #5B6763; letter-spacing: 0.04em">STEP 2 OF 4</div>
+    <div style="display: flex; gap: 6px">
+      <div style="flex: 1; height: 4px; border-radius: 2px; background: #0E5A52"></div>
+      <div style="flex: 1; height: 4px; border-radius: 2px; background: #0E5A52"></div>
+      <div style="flex: 1; height: 4px; border-radius: 2px; background: #D5DAD3"></div>
+      <div style="flex: 1; height: 4px; border-radius: 2px; background: #D5DAD3"></div>
+    </div>
+  </div>
+
+  <h1 style="margin: 0; font-size: 28px; line-height: 1.15; font-weight: 800">Tell us about your week</h1>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <div style="font-size: 13px; font-weight: 700; color: #5B6763">DAYS YOU CAN TRAIN</div>
+    <div style="display: flex; gap: 6px">
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 13px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 10px; height: 44px; cursor: pointer">Mon</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 13px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 10px; height: 44px; cursor: pointer">Tue</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 13px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 10px; height: 44px; cursor: pointer">Wed</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 13px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 10px; height: 44px; cursor: pointer">Thu</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 13px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 10px; height: 44px; cursor: pointer">Fri</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 13px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 10px; height: 44px; cursor: pointer">Sat</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 13px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 10px; height: 44px; cursor: pointer">Sun</button>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <div style="font-size: 13px; font-weight: 700; color: #5B6763">TIME PER SESSION</div>
+    <div style="display: flex; gap: 8px">
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 44px; cursor: pointer">30 min</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 44px; cursor: pointer">45 min</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; color: #0B463F; background: #E1EFEC; border: 2px solid #0E5A52; border-radius: 12px; height: 44px; cursor: pointer">60 min</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 44px; cursor: pointer">75+ min</button>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <div style="font-size: 13px; font-weight: 700; color: #5B6763">WHERE YOU TRAIN</div>
+    <div style="display: flex; gap: 8px">
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; color: #0B463F; background: #E1EFEC; border: 2px solid #0E5A52; border-radius: 12px; height: 44px; cursor: pointer">Gym</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 44px; cursor: pointer">Home</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 44px; cursor: pointer">Both</button>
+    </div>
+    <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: #3C4A46">
+      <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #0E5A52">I have a treadmill I can use
+    </label>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <div style="font-size: 13px; font-weight: 700; color: #5B6763">YOUR DAY</div>
+    <div style="display: flex; gap: 8px">
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; color: #0B463F; background: #E1EFEC; border: 2px solid #0E5A52; border-radius: 12px; height: 44px; cursor: pointer">Desk job</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 44px; cursor: pointer">Mixed</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 44px; cursor: pointer">On my feet</button>
+    </div>
+    <div style="font-size: 13px; color: #5B6763">Phone step count: we will read it if you allow it, so we do not guess.</div>
+  </div>
+
+  <div style="flex: 1"></div>
+
+  <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 54px; cursor: pointer">Continue</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

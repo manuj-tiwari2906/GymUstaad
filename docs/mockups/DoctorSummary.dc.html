@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Doctor summary</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="BloodReport.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Blood report</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Summary for your doctor</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">A one-page summary you can show or send. You choose what goes in.</p>
+    </div>
+
+    <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">GOAL</div>
+      <div style="font-size: 15px; font-weight: 700">Muscle gain · week 6 of the program</div>
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">OUTSIDE THE LAB RANGE</div>
+      <div style="font-size: 14px; line-height: 1.5">Vitamin D 14 ng/mL (30 to 100)<br>Ferritin 18 ng/mL (24 to 336)<br>Vitamin B12 190 pg/mL (200 to 900)<br>LDL cholesterol 128 mg/dL (under 100)</div>
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">WHAT THE APP NOTICED</div>
+      <div style="font-size: 14px; line-height: 1.45">Chest tape unchanged for 3 weeks while training and protein are on target. Sleep about 6 hours.</div>
+      <div style="{{foodStyle}}">
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">FOOD (LAST 14 DAYS)</div>
+        <div style="font-size: 14px; line-height: 1.45">Average about 2,300 kcal and 118 g protein a day. No dairy (lactose intolerant).</div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">QUESTIONS TO ASK</div>
+      <sc-for list="{{questions}}" as="q" hint-placeholder-count="3">
+        <button type="button" onClick="{{q.pick}}" style="{{q.style}}">
+          <span style="{{q.boxStyle}}">{{q.mark}}</span>
+          <span style="font-size: 14px; line-height: 1.4; text-align: left">{{q.text}}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <button type="button" onClick="{{toggleFood}}" style="font-family: inherit; font-size: 14px; font-weight: 800; color: #0E5A52; background: transparent; border: 0; text-align: left; padding: 0; cursor: pointer">{{foodToggle}}</button>
+
+    <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 52px; cursor: pointer">Save as PDF</button>
+    <div style="font-size: 12px; line-height: 1.45; color: #5B6763; text-align: center">This summary is a record of your data, not a diagnosis or a treatment plan. Sample data.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ food: true, q: [0, 1, 2] }, this.state || {});
+    const Q = [
+      'Could these low values be affecting my energy and training progress?',
+      'Do I need treatment, and when should these be rechecked?',
+      'Is my food enough, or should I change what I eat?'
+    ];
+    const sel = Array.isArray(st.q) ? st.q : [];
+    return {
+      foodStyle: st.food ? 'display: flex; flex-direction: column; gap: 6px' : 'display: none',
+      foodToggle: st.food ? 'Remove food summary' : 'Add food summary',
+      toggleFood: () => this.setState({ food: !st.food }),
+      questions: Q.map((t, i) => {
+        const on = sel.indexOf(i) >= 0;
+        return {
+          text: t, mark: on ? '✓' : '',
+          style: 'display: flex; gap: 10px; align-items: flex-start; width: 100%; box-sizing: border-box; font-family: inherit; color: #14201E; background: #fff; border: 1px solid #E3E6E0; border-radius: 14px; padding: 12px 14px; cursor: pointer',
+          boxStyle: (on ? 'background: #0E5A52; color: #fff; border: 2px solid #0E5A52;' : 'background: #fff; color: #fff; border: 2px solid #B8C0BB;')
+            + ' width: 20px; height: 20px; border-radius: 6px; flex: none; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; box-sizing: border-box',
+          pick: () => this.setState({ q: on ? sel.filter((x) => x !== i) : sel.concat([i]) })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

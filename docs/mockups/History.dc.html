@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Why your plan changed</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Plan.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Plan</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Why your plan changed</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">Every change, with the reason and the data behind it. Nothing changes silently.</p>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+        <button type="button" onClick="{{f.pick}}" style="{{f.style}}">{{f.text}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <sc-for list="{{entries}}" as="e" hint-placeholder-count="5">
+        <div style="display: flex; gap: 12px">
+          <div style="display: flex; flex-direction: column; align-items: center; width: 40px; flex: none">
+            <span style="font-size: 12px; font-weight: 800; color: #5B6763">{{e.week}}</span>
+            <span style="width: 2px; flex: 1; background: #D5DAD3; margin-top: 4px"></span>
+          </div>
+          <button type="button" onClick="{{e.pick}}" style="{{e.cardStyle}}">
+            <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+              <span style="{{e.tagStyle}}">{{e.tag}}</span>
+              <span style="font-size: 12px; font-weight: 800; color: #0E5A52">{{e.toggle}}</span>
+            </span>
+            <span style="font-size: 16px; line-height: 1.25; font-weight: 800; text-align: left">{{e.title}}</span>
+            <span style="{{e.detailStyle}}">
+              <span style="font-size: 14px; line-height: 1.45; color: #3C4A46; text-align: left"><strong>Why:</strong> {{e.why}}</span>
+              <span style="font-size: 13px; line-height: 1.4; color: #5B6763; text-align: left"><strong>Based on:</strong> {{e.basis}}</span>
+              <span style="font-size: 13px; line-height: 1.4; font-weight: 700; color: #0B463F; text-align: left">Result so far: {{e.result}}</span>
+            </span>
+          </button>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="font-size: 12px; line-height: 1.45; color: #5B6763; text-align: center">Sample data. Results are shown as they come in, and we say when it is too early to tell.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ filter: 'All', open: 0 }, this.state || {});
+    const ALL = [
+      { week: 'WK 4', type: 'Data', title: 'Asked you to retake your week 4 photo',
+        why: 'The photo was too dark to compare with week 0 fairly.', basis: 'Photo quality check: lighting too dim.', result: 'Waiting for the retake. Tape is used meanwhile.' },
+      { week: 'WK 3', type: 'Recovery', title: 'Added a 10:30 pm wind-down reminder',
+        why: 'You report about 5.5 hours of sleep, which cuts recovery.', basis: 'Intake sleep answer, 3 morning check-ins.', result: 'Sleep up to about 6 hours. Too early to link it to lifts.' },
+      { week: 'WK 2', type: 'Training', title: 'Chest sets 10 → 14 a week',
+        why: 'Incline press rose but the tape did not, so we raised volume once more, inside the 12 to 20 range.', basis: 'Training log weeks 1 to 2, chest tape.', result: 'Incline press +7.5 kg since start.' },
+      { week: 'WK 1', type: 'Food', title: 'Protein target set to about 125 g a day',
+        why: 'You averaged about 78 g a day, well under what supports muscle gain.', basis: '5 days of food log, body weight.', result: 'You hit the target on 4 of 7 days this week.' },
+      { week: 'WK 1', type: 'Training', title: 'Chest sets 6 → 10 a week',
+        why: 'Six chest sets a week is under the range most lifters grow on.', basis: 'Intake training history, workout log.', result: 'Press went up. See week 2.' }
+    ];
+    const FILTERS = ['All', 'Training', 'Food', 'Recovery', 'Data'];
+    const f = FILTERS.indexOf(st.filter) >= 0 ? st.filter : 'All';
+    const shown = ALL.filter((e) => f === 'All' || e.type === f);
+    const open = Math.min(st.open, shown.length - 1);
+    const tagColors = {
+      Training: 'background: #E1EFEC; color: #0B463F;',
+      Food: 'background: #FBEFD9; color: #7A4B00;',
+      Recovery: 'background: #E4E8F6; color: #26336B;',
+      Data: 'background: #ECEDEA; color: #3C4A46;'
+    };
+    return {
+      filters: FILTERS.map((t) => ({
+        text: t,
+        style: (t === f
+          ? 'background: #0E5A52; color: #fff; border: 0;'
+          : 'background: #fff; color: #3C4A46; border: 1px solid #D5DAD3;')
+          + ' font-family: inherit; font-size: 13px; font-weight: 800; border-radius: 20px; padding: 8px 14px; cursor: pointer',
+        pick: () => this.setState({ filter: t, open: 0 })
+      })),
+      entries: shown.map((e, i) => {
+        const on = i === open;
+        return {
+          week: e.week, tag: e.type, title: e.title, why: e.why, basis: e.basis, result: e.result,
+          toggle: on ? 'Hide' : 'Details',
+          tagStyle: tagColors[e.type] + ' border-radius: 8px; padding: 2px 8px; font-size: 11px; font-weight: 800',
+          cardStyle: (on ? 'background: #fff; border: 2px solid #0E5A52;' : 'background: #fff; border: 2px solid #E3E6E0;')
+            + ' flex: 1; min-width: 0; font-family: inherit; color: #14201E; border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer',
+          detailStyle: on ? 'display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #E3E6E0; padding-top: 8px' : 'display: none',
+          pick: () => this.setState({ open: on ? -1 : i })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

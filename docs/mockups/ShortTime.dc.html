@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Short on time</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Today.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Today</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Short on time?</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">Tell us how long you have. We cut the least important sets first, not the whole session.</p>
+    </div>
+
+    <div style="display: flex; gap: 8px">
+      <sc-for list="{{times}}" as="t" hint-placeholder-count="3">
+        <button type="button" onClick="{{t.pick}}" style="{{t.style}}">{{t.text}}</button>
+      </sc-for>
+    </div>
+
+    <div style="background: #E1EFEC; border-radius: 14px; padding: 10px 14px; font-size: 13px; line-height: 1.45; color: #0B463F"><strong>Protected: chest.</strong> It is your open case, so chest sets are cut last.</div>
+
+    <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 6px 16px; display: flex; flex-direction: column">
+      <div style="padding: 8px 0 4px; font-size: 12px; font-weight: 800; color: #5B6763; letter-spacing: 0.04em">PUSH · {{plan.minutes}} MIN VERSION</div>
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+        <div style="{{it.rowStyle}}">
+          <span style="display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 800">{{it.name}}</span>
+            <span style="font-size: 12px; font-weight: 600; color: #5B6763">{{it.note}}</span>
+          </span>
+          <span style="font-size: 15px; font-weight: 800">{{it.sets}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; font-weight: 800; color: #5B6763">TOTAL SETS TODAY</span>
+        <span style="font-size: 22px; font-weight: 800">{{plan.total}}</span>
+      </div>
+      <div style="{{plan.chestStyle}}">
+        <span style="font-size: 12px; font-weight: 800">CHEST SETS THIS WEEK</span>
+        <span style="font-size: 22px; font-weight: 800">{{plan.chestWeek}} of 14</span>
+      </div>
+    </div>
+
+    <div style="font-size: 13px; line-height: 1.45; color: #3C4A46">{{plan.moved}}</div>
+
+    <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 52px; cursor: pointer">{{plan.cta}}</button>
+    <div style="text-align: center; font-size: 12px; color: #5B6763">Times are estimates with normal rests. Sample data.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ t: 45 }, this.state || {});
+    const EX = [
+      { name: 'Incline dumbbell press', muscle: 'chest', plan: { 60: 4, 45: 4, 30: 4 } },
+      { name: 'Flat bench press', muscle: 'chest', plan: { 60: 3, 45: 3, 30: 2 } },
+      { name: 'Pec deck', muscle: 'chest', plan: { 60: 3, 45: 3, 30: 2 } },
+      { name: 'Overhead press', muscle: 'shoulders', plan: { 60: 3, 45: 2, 30: 0 } },
+      { name: 'Lateral raise', muscle: 'shoulders', plan: { 60: 3, 45: 2, 30: 0 } },
+      { name: 'Triceps pushdown', muscle: 'triceps', plan: { 60: 3, 45: 0, 30: 0 } }
+    ];
+    const FULL = { 60: 19, 45: 14, 30: 8 };
+    const t = [60, 45, 30].indexOf(st.t) >= 0 ? st.t : 45;
+
+    const times = [60, 45, 30].map((m) => ({
+      text: m + ' min',
+      style: (m === t
+        ? 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F; font-weight: 800;'
+        : 'background: #fff; border: 1px solid #D5DAD3; color: #3C4A46; font-weight: 700;')
+        + ' flex: 1; font-family: inherit; font-size: 15px; border-radius: 12px; height: 46px; cursor: pointer',
+      pick: () => this.setState({ t: m })
+    }));
+
+    let chestToday = 0;
+    let cutSets = 0;
+    const items = EX.map((e, i) => {
+      const s = e.plan[t];
+      const full = e.plan[60];
+      if (e.muscle === 'chest') chestToday += s;
+      cutSets += (full - s);
+      const skipped = s === 0;
+      return {
+        name: e.name,
+        note: skipped ? 'Skipped today, moved to Friday' : (s < full ? 'Cut from ' + full + ' sets' : (e.muscle === 'chest' ? 'Protected' : 'Full')),
+        sets: skipped ? '–' : s + ' sets',
+        rowStyle: 'display: flex; justify-content: space-between; align-items: center; padding: 10px 0; '
+          + (i > 0 ? 'border-top: 1px solid #E3E6E0; ' : '')
+          + (skipped ? 'opacity: 0.55;' : '')
+      };
+    });
+
+    const chestWeek = 4 + chestToday;
+    const ok = chestWeek >= 12;
+    return {
+      times: times,
+      items: items,
+      plan: {
+        minutes: t,
+        total: FULL[t] + ' sets',
+        chestWeek: chestWeek,
+        chestStyle: (ok
+          ? 'background: #fff; border: 1px solid #E3E6E0; color: #14201E;'
+          : 'background: #FBEFD9; border: 1px solid #E8A33D; color: #3F2A00;')
+          + ' border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px',
+        moved: cutSets === 0
+          ? 'Nothing is cut. This is your full session.'
+          : cutSets + ' sets are cut today. Shoulder and triceps sets move to Friday\'s upper session where they fit, and chest stays at ' + chestWeek + ' of 14 sets this week' + (ok ? ', still inside the 12 to 20 range.' : ', below 12, so we would add chest sets on Friday.'),
+        cta: 'Start ' + t + ' minute version'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Food limits</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Intake2.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Back</a>
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">STEP 3 OF 4 · FOOD LIMITS</div>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Anything you cannot eat?</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">Your plan, food log suggestions and meal ideas will never include these.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">YOUR DIET (CONFIRM)</div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{diets}}" as="d" hint-placeholder-count="4">
+          <button type="button" onClick="{{d.pick}}" style="{{d.style}}">{{d.text}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">INTOLERANCES AND ALLERGIES</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{flags}}" as="f" hint-placeholder-count="6">
+          <button type="button" onClick="{{f.pick}}" style="{{f.style}}">{{f.text}}</button>
+        </sc-for>
+      </div>
+      <input type="text" value="" placeholder="Anything else? e.g. brinjal makes me sick" readonly style="font-family: inherit; font-size: 15px; color: #14201E; background: #fff; border: 1px solid #D5DAD3; border-radius: 12px; height: 46px; box-sizing: border-box; padding: 0 14px; width: 100%">
+    </div>
+
+    <div style="background: #E1EFEC; border: 1px solid #BFE0DA; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #0B463F">WHAT THIS CHANGES</div>
+      <div style="font-size: 14px; line-height: 1.45; color: #1F3A35">{{effect}}</div>
+      <div style="font-size: 12px; font-weight: 800; color: #0B463F">PROTEIN SOURCES WE WILL USE</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px">
+        <sc-for list="{{sources}}" as="s" hint-placeholder-count="6">
+          <span style="background: #fff; border-radius: 14px; padding: 5px 10px; font-size: 13px; font-weight: 700; color: #14201E">{{s.name}}</span>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="font-size: 12px; line-height: 1.45; color: #5B6763">For a serious allergy, always read food labels and follow your doctor. This app is a helper, not a safety check.</div>
+
+    <a href="Intake3.dc.html" style="display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border-radius: 14px; height: 52px">Continue</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ diet: 'nonveg', on: ['lactose'] }, this.state || {});
+    const DIETS = [
+      { k: 'veg', t: 'Vegetarian' }, { k: 'egg', t: 'Eggetarian' },
+      { k: 'nonveg', t: 'Non-vegetarian' }, { k: 'jain', t: 'Jain' }
+    ];
+    const FLAGS = [
+      { k: 'lactose', t: 'Lactose intolerant' }, { k: 'gluten', t: 'Gluten' }, { k: 'nuts', t: 'Nuts' },
+      { k: 'eggs', t: 'Egg allergy' }, { k: 'fish', t: 'Fish or shellfish' }, { k: 'soy', t: 'Soy' }
+    ];
+    const SRC = [
+      { n: 'Chicken', needs: 'nonveg' }, { n: 'Fish', needs: 'nonveg', not: 'fish' },
+      { n: 'Eggs', needs: 'egg', not: 'eggs' }, { n: 'Paneer', not: 'lactose' },
+      { n: 'Curd', not: 'lactose' }, { n: 'Lactose-free curd', only: 'lactose' },
+      { n: 'Whey', not: 'lactose' }, { n: 'Tofu', not: 'soy' }, { n: 'Soya chunks', not: 'soy' },
+      { n: 'Dal', }, { n: 'Chole and rajma' }, { n: 'Sattu' }, { n: 'Peanuts', not: 'nuts' }
+    ];
+    const diet = DIETS.some((d) => d.k === st.diet) ? st.diet : 'nonveg';
+    const on = Array.isArray(st.on) ? st.on : [];
+    const has = (k) => on.indexOf(k) >= 0;
+    const level = { veg: 0, jain: 0, egg: 1, nonveg: 2 }[diet];
+
+    const sources = SRC.filter((s) => {
+      if (s.needs === 'nonveg' && level < 2) return false;
+      if (s.needs === 'egg' && level < 1) return false;
+      if (diet === 'jain' && s.n === 'Eggs') return false;
+      if (s.not && has(s.not)) return false;
+      if (s.only && !has(s.only)) return false;
+      return true;
+    }).map((s) => ({ name: s.n }));
+
+    const parts = [];
+    if (diet === 'veg') parts.push('No meat, fish or eggs.');
+    if (diet === 'egg') parts.push('Eggs are in. No meat or fish.');
+    if (diet === 'jain') parts.push('No meat, fish or eggs. Root vegetables like onion, potato and garlic are left out of meal ideas.');
+    if (diet === 'nonveg') parts.push('All protein sources are open.');
+    if (has('lactose')) parts.push('Milk, paneer, regular curd and whey are swapped for options that suit you. Some people with lactose intolerance can handle curd, so tell us how you feel after eating it.');
+    if (has('gluten')) parts.push('Wheat roti, bread and maida items are replaced with rice, millets or besan options.');
+    if (has('nuts')) parts.push('Nuts and nut butters are removed, including peanuts.');
+    if (has('eggs')) parts.push('Eggs and egg-based items are removed.');
+    if (has('fish')) parts.push('Fish and shellfish are removed.');
+    if (has('soy')) parts.push('Soy products like tofu and soya chunks are removed.');
+    if (on.length === 0 && diet === 'nonveg') parts.push('No limits means we can use your full range of food.');
+    parts.push('Your protein target stays the same. Only the sources change.');
+
+    return {
+      diets: DIETS.map((d) => ({
+        text: d.t,
+        style: (d.k === diet
+          ? 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F; font-weight: 800;'
+          : 'background: #fff; border: 2px solid #E3E6E0; color: #14201E; font-weight: 700;')
+          + ' font-family: inherit; font-size: 14px; border-radius: 12px; height: 46px; cursor: pointer',
+        pick: () => this.setState({ diet: d.k })
+      })),
+      flags: FLAGS.map((f) => ({
+        text: f.t,
+        style: (has(f.k)
+          ? 'background: #0E5A52; color: #fff; border: 0; font-weight: 800;'
+          : 'background: #fff; color: #3C4A46; border: 1px solid #D5DAD3; font-weight: 700;')
+          + ' font-family: inherit; font-size: 14px; border-radius: 20px; padding: 10px 14px; cursor: pointer',
+        pick: () => this.setState({ on: has(f.k) ? on.filter((x) => x !== f.k) : on.concat([f.k]) })
+      })),
+      effect: parts.join(' '),
+      sources: sources
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Morning check-in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Today.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Today</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Morning check-in</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">Ten seconds. We use it to decide how hard today should be.</p>
+    </div>
+
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+      <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+        <div style="font-size: 13px; font-weight: 800; color: #5B6763">{{r.label}}</div>
+        <div style="display: flex; gap: 6px">
+          <sc-for list="{{r.options}}" as="o" hint-placeholder-count="5">
+            <button type="button" onClick="{{o.pick}}" style="{{o.style}}">{{o.text}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <div style="{{result.boxStyle}}">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em">TODAY'S READINESS</span>
+        <span style="font-size: 13px; font-weight: 800">{{result.score}} of 8</span>
+      </div>
+      <div style="font-size: 22px; line-height: 1.15; font-weight: 800">{{result.title}}</div>
+      <div style="font-size: 14px; line-height: 1.45">{{result.text}}</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 52px; cursor: pointer">{{result.cta}}</button>
+      <a href="ShortTime.dc.html" style="text-align: center; font-size: 14px; font-weight: 800; color: #0E5A52; padding: 8px">Short on time instead?</a>
+    </div>
+
+    <div style="font-size: 12px; line-height: 1.45; color: #5B6763; text-align: center">A simple rule on your four answers, not a medical reading. If something hurts, use the <a href="Safety.dc.html" style="color: #0E5A52; font-weight: 800">pain check</a>.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ sleep: 1, energy: 2, sore: 2, stress: 1 }, this.state || {});
+    const DEF = [
+      { key: 'sleep', label: 'SLEEP LAST NIGHT', opts: ['Under 5 h', '5 to 6 h', '6 to 7 h', '7 to 8 h', '8 h or more'], pts: [0, 0, 1, 2, 2] },
+      { key: 'energy', label: 'ENERGY', opts: ['Very low', 'Low', 'OK', 'Good', 'Great'], pts: [0, 0, 1, 2, 2] },
+      { key: 'sore', label: 'SORENESS', opts: ['None', 'Light', 'Medium', 'High', 'Very high'], pts: [2, 2, 1, 0, 0] },
+      { key: 'stress', label: 'STRESS TODAY', opts: ['Calm', 'Mild', 'Medium', 'High', 'Very high'], pts: [2, 2, 1, 0, 0] }
+    ];
+    let score = 0;
+    const rows = DEF.map((d) => {
+      const sel = st[d.key];
+      score += d.pts[sel];
+      return {
+        label: d.label,
+        options: d.opts.map((text, i) => ({
+          text: text,
+          style: (i === sel
+            ? 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F; font-weight: 800;'
+            : 'background: #fff; border: 1px solid #D5DAD3; color: #3C4A46; font-weight: 700;')
+            + ' flex: 1; min-width: 0; font-family: inherit; font-size: 11px; line-height: 1.2; border-radius: 10px; height: 46px; padding: 0 2px; cursor: pointer',
+          pick: () => this.setState({ [d.key]: i })
+        }))
+      };
+    });
+    let result;
+    if (score >= 6) {
+      result = {
+        boxStyle: 'background: #0E5A52; color: #fff; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px',
+        title: 'Go as planned', text: 'You look recovered. Train today as written: Legs, 6 exercises.', cta: 'Start today\'s workout'
+      };
+    } else if (score >= 3) {
+      result = {
+        boxStyle: 'background: #FBEFD9; color: #3F2A00; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px',
+        title: 'Go lighter today', text: 'Same exercises, 2 fewer sets each, and stop with 2 reps left in the tank. You keep the habit without digging a recovery hole.', cta: 'Start the lighter version'
+      };
+    } else {
+      result = {
+        boxStyle: 'background: #14201E; color: #fff; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px',
+        title: 'Rest or walk today', text: 'Skip the session. An easy 20 minute walk counts as today\'s movement, and today\'s workout moves to tomorrow.', cta: 'Move workout to tomorrow'
+      };
+    }
+    result.score = score;
+    return { rows: rows, result: result };
+  }
+}
+</script>
+</body>
+</html>

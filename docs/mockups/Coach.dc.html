@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Coach chat</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif; padding: 20px 20px 20px; display: flex; flex-direction: column; gap: 14px">
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <a href="Review.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Review</a>
+    <h1 style="margin: 0; font-size: 26px; font-weight: 800">Ask the coach</h1>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; flex: 1">
+    <div style="align-self: flex-end; max-width: 80%; background: #0E5A52; color: #fff; border-radius: 16px 16px 4px 16px; padding: 12px 14px; font-size: 15px; line-height: 1.4">Why did you add chest sets? I thought 6 was enough.</div>
+
+    <div style="align-self: flex-start; max-width: 92%; background: #fff; border: 1px solid #E3E6E0; border-radius: 16px 16px 16px 4px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 15px; line-height: 1.45">Your chest got about 6 sets a week for 8 weeks and your press barely moved. Most people grow best on about 12 to 20 sets a week, so we raised it to 14 in two steps.</div>
+      <div style="font-size: 15px; line-height: 1.45">Since then incline press is up 7.5 kg. That fits the change, though 4 weeks is early to be sure.</div>
+      <div style="font-size: 12px; line-height: 1.4; color: #5B6763; border-top: 1px solid #E3E6E0; padding-top: 8px">Based on: your training log, weeks 1 to 4 · Baz-Valle et al. 2022</div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+      <span style="background: #fff; border: 1px solid #0E5A52; color: #0E5A52; border-radius: 20px; padding: 8px 14px; font-size: 14px; font-weight: 700">What if I only have 45 minutes?</span>
+      <span style="background: #fff; border: 1px solid #0E5A52; color: #0E5A52; border-radius: 20px; padding: 8px 14px; font-size: 14px; font-weight: 700">When do you check again?</span>
+      <span style="background: #fff; border: 1px solid #0E5A52; color: #0E5A52; border-radius: 20px; padding: 8px 14px; font-size: 14px; font-weight: 700">Why only 4 weeks?</span>
+    </div>
+
+    <div style="flex: 1"></div>
+
+    <div style="font-size: 12px; line-height: 1.4; color: #5B6763; text-align: center">The coach explains your numbers. It never changes your plan without telling you why.</div>
+  </div>
+
+  <div style="display: flex; gap: 8px; align-items: center">
+    <label for="msg" style="position: absolute; width: 1px; height: 1px; overflow: hidden">Message</label>
+    <input id="msg" type="text" placeholder="Ask about your plan" readonly style="flex: 1; font-family: inherit; font-size: 16px; color: #14201E; background: #fff; border: 1px solid #D5DAD3; border-radius: 14px; height: 48px; box-sizing: border-box; padding: 0 14px">
+    <button type="button" aria-label="Send" style="width: 48px; height: 48px; border: 0; border-radius: 14px; background: #0E5A52; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workout logging</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <a href="Today.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Today</a>
+    <span style="font-size: 13px; font-weight: 700; color: #5B6763">Exercise 2 of 6</span>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 4px">
+    <div style="font-size: 12px; font-weight: 700; color: #5B6763; letter-spacing: 0.04em">PUSH · CHEST FOCUS</div>
+    <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Incline dumbbell press</h1>
+    <div style="font-size: 14px; color: #3C4A46">3 sets · 8 to 10 reps · bench at about 30°</div>
+  </div>
+
+  <div style="background: #E1EFEC; border-radius: 14px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 700; color: #0B463F">
+    <span>Last time: 20 kg × 8</span>
+    <span>Try 22.5 kg</span>
+  </div>
+
+  <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: grid; grid-template-columns: 40px minmax(0, 1fr) minmax(0, 1fr) 40px; gap: 8px; font-size: 12px; font-weight: 800; color: #5B6763"><span>SET</span><span>KG</span><span>REPS</span><span></span></div>
+    <div style="display: grid; grid-template-columns: 40px minmax(0, 1fr) minmax(0, 1fr) 40px; gap: 8px; align-items: center; font-size: 16px; font-weight: 800">
+      <span>1</span><span>22.5</span><span>9</span>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0E5A52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Done"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+    </div>
+    <div style="display: grid; grid-template-columns: 40px minmax(0, 1fr) minmax(0, 1fr) 40px; gap: 8px; align-items: center; font-size: 16px; font-weight: 800">
+      <span>2</span><span>22.5</span><span>8</span>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0E5A52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Done"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+    </div>
+    <div style="display: grid; grid-template-columns: 40px minmax(0, 1fr) minmax(0, 1fr) 40px; gap: 8px; align-items: center">
+      <span style="font-size: 16px; font-weight: 800">3</span>
+      <input type="text" value="22.5" readonly aria-label="Set 3 weight in kg" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #14201E; background: #F4F5F1; border: 2px solid #0E5A52; border-radius: 10px; height: 42px; box-sizing: border-box; padding: 0 10px; width: 100%">
+      <input type="text" placeholder="reps" readonly aria-label="Set 3 reps" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #14201E; background: #F4F5F1; border: 2px solid #0E5A52; border-radius: 10px; height: 42px; box-sizing: border-box; padding: 0 10px; width: 100%">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9AA5A1" stroke-width="2" aria-label="Not done"><circle cx="12" cy="12" r="10"/></svg>
+    </div>
+  </div>
+
+  <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px">
+    <div style="font-size: 13px; font-weight: 800; color: #5B6763">HOW MANY MORE REPS COULD YOU DO?</div>
+    <div style="display: flex; gap: 8px">
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 10px; height: 42px; cursor: pointer">0</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; color: #0B463F; background: #E1EFEC; border: 2px solid #0E5A52; border-radius: 10px; height: 42px; cursor: pointer">1</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 10px; height: 42px; cursor: pointer">2</button>
+      <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; border-radius: 10px; height: 42px; cursor: pointer">3+</button>
+    </div>
+    <div style="font-size: 12px; color: #5B6763">This tells us if the set was hard enough to grow muscle.</div>
+  </div>
+
+  <div style="background: #14201E; color: #fff; border-radius: 16px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center">
+    <div>
+      <div style="font-size: 12px; font-weight: 700; color: #A9BAB5; letter-spacing: 0.04em">REST</div>
+      <div style="font-size: 28px; font-weight: 800">01:12</div>
+    </div>
+    <a href="Safety.dc.html" style="font-size: 14px; font-weight: 800; color: #E8A33D">Something hurts?</a>
+  </div>
+
+  <div style="flex: 1"></div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 52px; cursor: pointer">Log set 3</button>
+    <div style="text-align: center; font-size: 12px; color: #5B6763">Sample data shown in this mockup</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

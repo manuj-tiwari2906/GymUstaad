@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Not feeling well</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Today.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Today</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Not feeling well</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">We switch to a light plan, check in each day, and bring your normal plan back when you are ready.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">WHAT IS BOTHERING YOU</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{symptoms}}" as="s" hint-placeholder-count="4">
+          <button type="button" onClick="{{s.pick}}" style="{{s.style}}">{{s.text}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">DAY OF LIGHT PLAN</div>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="5">
+          <button type="button" onClick="{{d.pick}}" style="{{d.style}}">{{d.text}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">HOW DO YOU FEEL TODAY</div>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{feels}}" as="f" hint-placeholder-count="3">
+          <button type="button" onClick="{{f.pick}}" style="{{f.style}}">{{f.text}}</button>
+        </sc-for>
+      </div>
+      <button type="button" onClick="{{toggleFlag}}" style="{{flagStyle}}">{{flagText}}</button>
+    </div>
+
+    <div style="{{status.boxStyle}}">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em">{{status.label}}</div>
+      <div style="font-size: 17px; line-height: 1.3; font-weight: 800">{{status.title}}</div>
+      <div style="font-size: 14px; line-height: 1.45">{{status.body}}</div>
+    </div>
+
+    <div style="{{planBoxStyle}}">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #5B6763">TODAY'S LIGHT MEALS</div>
+      <sc-for list="{{meals}}" as="m" hint-placeholder-count="4">
+        <div style="display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid #E3E6E0; padding-top: 8px">
+          <span style="font-size: 13px; font-weight: 800; color: #5B6763; width: 78px; flex: none">{{m.slot}}</span>
+          <span style="font-size: 14px; line-height: 1.4; flex: 1">{{m.food}}</span>
+        </div>
+      </sc-for>
+      <div style="font-size: 13px; line-height: 1.45; color: #3C4A46">Training: walk only. Drink fluids through the day. Protein and calorie targets are paused.</div>
+    </div>
+
+    <div style="font-size: 12px; line-height: 1.45; color: #5B6763; text-align: center">We do not diagnose or suggest medicines. Sample data.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ sym: ['Loose motions'], day: 2, feel: 'same', flag: false }, this.state || {});
+    const SYM = ['Loose motions', 'Bloating', 'Acidity', 'Low appetite'];
+    const FEEL = [{ k: 'worse', t: 'Worse' }, { k: 'same', t: 'Same' }, { k: 'better', t: 'Better' }];
+    const sym = Array.isArray(st.sym) ? st.sym : [];
+    const day = Math.min(5, Math.max(1, st.day));
+    const feel = st.feel;
+    const flag = !!st.flag;
+
+    let kind = 'continue';
+    if (flag) kind = 'doctor_now';
+    else if (feel === 'worse' || (day >= 3 && feel === 'same')) kind = 'doctor';
+    else if (feel === 'better' && day >= 2) kind = 'stepup';
+
+    const STAT = {
+      continue: {
+        label: 'DAY ' + day + ' · KEEP IT LIGHT',
+        title: 'Stay on the light plan today',
+        body: 'We will ask again tomorrow. Two good days in a row and we start bringing your normal plan back in steps.',
+        box: 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F;'
+      },
+      stepup: {
+        label: 'DAY ' + day + ' · LOOKING BETTER',
+        title: 'Ready to bring food back in steps',
+        body: 'Step 1: normal portions with low oil for 2 days. Step 2: your usual plan. Or keep the lighter plan if you prefer. Your choice.',
+        box: 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F;'
+      },
+      doctor: {
+        label: 'NOT IMPROVING',
+        title: 'Please check with a doctor',
+        body: 'Feeling worse, or no better by day 3, is a reason to get seen. We have paused plan changes until you do.',
+        box: 'background: #FBEFD9; border: 2px solid #E8A33D; color: #3F2A00;'
+      },
+      doctor_now: {
+        label: 'SEE A DOCTOR TODAY',
+        title: 'This needs a doctor, not an app',
+        body: 'Blood in stool, high fever or not keeping fluids down should be checked today. We have paused your plan.',
+        box: 'background: #F6DCD5; border: 2px solid #C0452B; color: #7A2314;'
+      }
+    };
+    const s = STAT[kind];
+
+    const MEALS = {
+      continue: [
+        { slot: 'Breakfast', food: 'Banana, plain toast or poha with very little oil' },
+        { slot: 'Lunch', food: 'Moong dal khichdi, boiled vegetables' },
+        { slot: 'Snack', food: 'Coconut water, a ripe banana' },
+        { slot: 'Dinner', food: 'Plain rice with thin dal. Curd rice only if your stomach handles curd.' }
+      ],
+      stepup: [
+        { slot: 'Breakfast', food: 'Idli or poha with low oil' },
+        { slot: 'Lunch', food: 'Roti, dal and a simple sabzi, low oil' },
+        { slot: 'Snack', food: 'Fruit and a small handful of roasted chana' },
+        { slot: 'Dinner', food: 'Khichdi or rice with dal, low oil' }
+      ]
+    };
+    const showPlan = kind === 'continue' || kind === 'stepup';
+
+    return {
+      symptoms: SYM.map((t) => {
+        const o = sym.indexOf(t) >= 0;
+        return {
+          text: t,
+          style: (o ? 'background: #0E5A52; color: #fff; border: 0; font-weight: 800;' : 'background: #fff; color: #3C4A46; border: 1px solid #D5DAD3; font-weight: 700;')
+            + ' font-family: inherit; font-size: 14px; border-radius: 20px; padding: 10px 14px; cursor: pointer',
+          pick: () => this.setState({ sym: o ? sym.filter((x) => x !== t) : sym.concat([t]) })
+        };
+      }),
+      days: [1, 2, 3, 4, 5].map((n) => ({
+        text: String(n),
+        style: (n === day ? 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F; font-weight: 800;' : 'background: #fff; border: 1px solid #D5DAD3; color: #3C4A46; font-weight: 700;')
+          + ' flex: 1; font-family: inherit; font-size: 15px; border-radius: 12px; height: 44px; cursor: pointer',
+        pick: () => this.setState({ day: n })
+      })),
+      feels: FEEL.map((f) => ({
+        text: f.t,
+        style: (f.k === feel ? 'background: #E1EFEC; border: 2px solid #0E5A52; color: #0B463F; font-weight: 800;' : 'background: #fff; border: 1px solid #D5DAD3; color: #3C4A46; font-weight: 700;')
+          + ' flex: 1; font-family: inherit; font-size: 14px; border-radius: 12px; height: 44px; cursor: pointer',
+        pick: () => this.setState({ feel: f.k })
+      })),
+      flagText: flag ? 'Red flag selected. Tap to clear' : 'I have blood in stool, high fever, or cannot keep fluids down',
+      flagStyle: (flag ? 'background: #F6DCD5; border: 2px solid #C0452B; color: #7A2314;' : 'background: #fff; border: 1px solid #D5DAD3; color: #3C4A46;')
+        + ' font-family: inherit; font-size: 13px; font-weight: 700; border-radius: 12px; padding: 10px 12px; text-align: left; line-height: 1.35; cursor: pointer',
+      toggleFlag: () => this.setState({ flag: !flag }),
+      status: { label: s.label, title: s.title, body: s.body, boxStyle: s.box + ' border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px' },
+      planBoxStyle: showPlan ? 'background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px' : 'display: none',
+      meals: showPlan ? MEALS[kind] : []
+    };
+  }
+}
+</script>
+</body>
+</html>

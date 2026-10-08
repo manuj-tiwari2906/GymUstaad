@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Evidence library</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Coach.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Coach</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">Evidence library</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5B6763">The research behind your plan. Each card says what we use it for and how sure we are.</p>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+        <button type="button" onClick="{{f.pick}}" style="{{f.style}}">{{f.text}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <sc-for list="{{cards}}" as="c" hint-placeholder-count="4">
+        <button type="button" onClick="{{c.pick}}" style="{{c.cardStyle}}">
+          <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+            <span style="font-size: 13px; font-weight: 800; color: #5B6763">{{c.cite}}</span>
+            <span style="{{c.statusStyle}}">{{c.status}}</span>
+          </span>
+          <span style="font-size: 16px; line-height: 1.25; font-weight: 800; text-align: left">{{c.title}}</span>
+          <span style="{{c.detailStyle}}">
+            <span style="font-size: 14px; line-height: 1.45; color: #3C4A46; text-align: left"><strong>Type:</strong> {{c.kind}}</span>
+            <span style="font-size: 14px; line-height: 1.45; color: #3C4A46; text-align: left"><strong>What it found:</strong> {{c.found}}</span>
+            <span style="font-size: 14px; line-height: 1.45; color: #0B463F; text-align: left"><strong>How we use it:</strong> {{c.use}}</span>
+            <span style="font-size: 13px; line-height: 1.4; color: #5B6763; text-align: left"><strong>Limits:</strong> {{c.limits}}</span>
+            <span style="font-size: 12px; font-weight: 800; color: #0E5A52; text-align: left">Link to the paper: placeholder</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="background: #FBEFD9; border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.45; color: #3F2A00"><strong>Estimates, not promises.</strong> Studies describe groups of people. Your own data decides what we change for you.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ filter: 'All', open: 0 }, this.state || {});
+    const ALL = [
+      { type: 'Training', cite: 'Baz-Valle et al., 2022', title: 'How many sets a week per muscle',
+        kind: 'Systematic review', status: 'Verified',
+        found: 'Muscle growth was generally seen in a range of about 12 to 20 hard sets per muscle per week.',
+        use: 'Sets the starting band for each muscle, then we adjust from your own response.',
+        limits: 'Averages across studies. Beginners may grow on fewer sets.' },
+      { type: 'Training', cite: 'Schoenfeld et al., 2017', title: 'More sets, more growth, up to a point',
+        kind: 'Meta-analysis', status: 'Verified',
+        found: 'Higher weekly volume was linked to greater muscle growth.',
+        use: 'Why we raise sets step by step when a muscle stops responding.',
+        limits: 'Benefit flattens at high volume, and recovery becomes the limit.' },
+      { type: 'Fat loss', cite: 'Garthe et al., 2011', title: 'Slower weight loss keeps more muscle',
+        kind: 'Controlled trial in athletes', status: 'Verified',
+        found: 'A slower rate of loss, about 0.7 percent of body weight a week, kept lean mass better than a faster rate.',
+        use: 'Why your fat loss target is a gentle weekly rate, not a crash.',
+        limits: 'Athletes in a trial. Your rate is adjusted from your trend.' },
+      { type: 'Food', cite: 'Morton et al., 2018', title: 'Protein and muscle gain',
+        kind: 'Meta-analysis', status: 'Source check pending',
+        found: 'Extra protein helped strength training gains, with benefit levelling off around a daily intake per kg of body weight.',
+        use: 'Basis for your daily protein target. We will confirm the exact figure before launch.',
+        limits: 'The number we show must match the paper. Not final.' }
+    ];
+    const FILTERS = ['All', 'Training', 'Food', 'Fat loss'];
+    const f = FILTERS.indexOf(st.filter) >= 0 ? st.filter : 'All';
+    const shown = ALL.filter((e) => f === 'All' || e.type === f);
+    const open = Math.min(st.open, shown.length - 1);
+    return {
+      filters: FILTERS.map((t) => ({
+        text: t,
+        style: (t === f
+          ? 'background: #0E5A52; color: #fff; border: 0;'
+          : 'background: #fff; color: #3C4A46; border: 1px solid #D5DAD3;')
+          + ' font-family: inherit; font-size: 13px; font-weight: 800; border-radius: 20px; padding: 8px 14px; cursor: pointer',
+        pick: () => this.setState({ filter: t, open: 0 })
+      })),
+      cards: shown.map((e, i) => {
+        const on = i === open;
+        const pending = e.status !== 'Verified';
+        return {
+          cite: e.cite, title: e.title, kind: e.kind, found: e.found, use: e.use, limits: e.limits,
+          status: e.status,
+          statusStyle: (pending ? 'background: #FBEFD9; color: #7A4B00;' : 'background: #E1EFEC; color: #0B463F;')
+            + ' border-radius: 8px; padding: 2px 8px; font-size: 11px; font-weight: 800; white-space: nowrap',
+          cardStyle: (on ? 'border: 2px solid #0E5A52;' : 'border: 2px solid #E3E6E0;')
+            + ' background: #fff; width: 100%; box-sizing: border-box; font-family: inherit; color: #14201E; border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer',
+          detailStyle: on ? 'display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #E3E6E0; padding-top: 8px' : 'display: none',
+          pick: () => this.setState({ open: on ? -1 : i })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

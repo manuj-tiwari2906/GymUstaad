@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What should I eat next</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+  <div style="height: 844px; overflow-y: auto; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <a href="Today.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Today</a>
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800">What should I eat next?</h1>
+    </div>
+
+    <div style="background: #0E5A52; color: #fff; border-radius: 16px; padding: 14px 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+      <div>
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #BFE0DA">PROTEIN LEFT</div>
+        <div style="font-size: 26px; font-weight: 800">63 g</div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #BFE0DA">CALORIES LEFT</div>
+        <div style="font-size: 26px; font-weight: 800">1,280</div>
+      </div>
+    </div>
+
+    <div style="display: flex; background: #E3E6E0; border-radius: 12px; padding: 4px; gap: 4px">
+      <button type="button" onClick="{{pickHome}}" style="{{homeStyle}}">At home</button>
+      <button type="button" onClick="{{pickOut}}" style="{{outStyle}}">Ordering out</button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <sc-for list="{{options}}" as="o" hint-placeholder-count="4">
+        <button type="button" onClick="{{o.pick}}" style="{{o.cardStyle}}">
+          <span style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px">
+            <span style="font-size: 15px; line-height: 1.3; font-weight: 800; text-align: left">{{o.name}}</span>
+            <span style="{{o.riskStyle}}">{{o.risk}}</span>
+          </span>
+          <span style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: #3C4A46"><span>{{o.protein}} g protein</span><span>about {{o.kcal}} kcal ({{o.range}})</span></span>
+          <span style="display: block; height: 6px; border-radius: 3px; background: #E3E6E0"><span style="{{o.barStyle}}"></span></span>
+          <span style="font-size: 12px; font-weight: 700; color: #5B6763; text-align: left">{{o.fills}}% of your protein left · {{o.note}}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="{{pick.boxStyle}}">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.04em">IF YOU EAT THIS</div>
+      <div style="font-size: 15px; line-height: 1.45">Protein left after: <strong>{{pick.proteinLeft}} g</strong>. Calories left after: <strong>{{pick.kcalLeft}}</strong>.</div>
+      <div style="font-size: 13px; line-height: 1.45">{{pick.tip}}</div>
+    </div>
+
+    <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 52px; cursor: pointer">Log this meal</button>
+    <div style="font-size: 12px; line-height: 1.45; color: #5B6763; text-align: center">Sample values. Real ones come from the food database, as a typical value with a range.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ where: 'home', sel: 0 }, this.state || {});
+    const where = st.where === 'out' ? 'out' : 'home';
+    const LEFT_P = 63, LEFT_K = 1280;
+    const DATA = {
+      home: [
+        { name: 'Chicken curry + 1 cup rice', p: 38, k: 650, lo: 550, hi: 780, risk: 'Low', note: 'Home oil is yours to control', tip: 'Cook with 1 tablespoon of oil to keep the lower end of the range.' },
+        { name: 'Paneer bhurji + 2 roti', p: 30, k: 560, lo: 480, hi: 660, risk: 'Low', note: 'Good vegetarian pick', tip: 'Use less oil and more paneer per serving to lift protein.' },
+        { name: 'Egg bhurji (3 eggs) + 2 roti', p: 28, k: 480, lo: 430, hi: 540, risk: 'Low', note: 'Quick, tight range', tip: 'Cook in a non-stick pan to cut the oil you need.' },
+        { name: 'Dal tadka + 2 roti + curd', p: 26, k: 520, lo: 440, hi: 620, risk: 'Low', note: 'Protein comes mostly from dal and curd', tip: 'Add a bowl of curd for about 8 g more protein.' }
+      ],
+      out: [
+        { name: 'Tandoori chicken (half) + roti + salad', p: 42, k: 600, lo: 500, hi: 750, risk: 'Low', note: 'Grilled, little added oil', tip: 'Skip the butter on the roti to stay near the lower end.' },
+        { name: 'Chicken tikka (6 pieces) + jeera rice', p: 36, k: 700, lo: 550, hi: 850, risk: 'Medium', note: 'Rice portion moves the total', tip: 'Ask for a half portion of rice if you are near your calorie limit.' },
+        { name: 'Dal tadka + 2 tandoori roti', p: 22, k: 560, lo: 450, hi: 700, risk: 'Medium', note: 'Tadka oil varies a lot', tip: 'Ask for less oil in the tadka. That can save roughly 100 kcal, an estimate.' },
+        { name: 'Veg chowmein', p: 14, k: 650, lo: 500, hi: 900, risk: 'High', note: 'Low protein, widest oil range', tip: 'If you choose this, add a protein side and ask for less oil.' }
+      ]
+    };
+    const list = DATA[where].slice().sort((a, b) => (b.p / b.k) - (a.p / a.k));
+    const sel = Math.min(st.sel || 0, list.length - 1);
+
+    const seg = (on) => on
+      ? 'flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; color: #14201E; background: #fff; border: 0; border-radius: 9px; height: 38px; cursor: pointer'
+      : 'flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: transparent; border: 0; border-radius: 9px; height: 38px; cursor: pointer';
+    const riskColors = {
+      Low: 'background: #E1EFEC; color: #0B463F;',
+      Medium: 'background: #FBEFD9; color: #7A4B00;',
+      High: 'background: #F6DCD5; color: #7A2314;'
+    };
+
+    const options = list.map((o, i) => {
+      const fill = Math.round(Math.min(1, o.p / LEFT_P) * 100);
+      return {
+        name: o.name, protein: o.p, kcal: o.k, range: o.lo + ' to ' + o.hi,
+        risk: o.risk + ' oil risk', note: o.note, fills: fill,
+        riskStyle: riskColors[o.risk] + ' border-radius: 8px; padding: 2px 8px; font-size: 11px; font-weight: 800; white-space: nowrap',
+        barStyle: 'display: block; height: 6px; border-radius: 3px; background: #0E5A52; width: ' + fill + '%',
+        cardStyle: (i === sel ? 'background: #E1EFEC; border: 2px solid #0E5A52;' : 'background: #fff; border: 2px solid #E3E6E0;')
+          + ' font-family: inherit; color: #14201E; border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; cursor: pointer; width: 100%; box-sizing: border-box',
+        pick: () => this.setState({ sel: i })
+      };
+    });
+
+    const c = list[sel];
+    return {
+      homeStyle: seg(where === 'home'),
+      outStyle: seg(where === 'out'),
+      pickHome: () => this.setState({ where: 'home', sel: 0 }),
+      pickOut: () => this.setState({ where: 'out', sel: 0 }),
+      options: options,
+      pick: {
+        boxStyle: 'background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px',
+        proteinLeft: Math.max(0, LEFT_P - c.p),
+        kcalLeft: (LEFT_K - c.k).toLocaleString('en-US'),
+        tip: c.tip
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

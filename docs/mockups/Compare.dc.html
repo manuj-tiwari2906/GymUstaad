@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Photo compare</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <a href="Progress.dc.html" style="font-size: 14px; font-weight: 800; color: #0E5A52">‹ Progress</a>
+    <h1 style="margin: 0; font-size: 26px; font-weight: 800">Photo compare</h1>
+  </div>
+
+  <div style="display: flex; background: #E3E6E0; border-radius: 12px; padding: 4px; gap: 4px">
+    <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; color: #14201E; background: #fff; border: 0; border-radius: 9px; height: 38px; cursor: pointer">Front</button>
+    <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: transparent; border: 0; border-radius: 9px; height: 38px; cursor: pointer">Side</button>
+    <button type="button" style="flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: transparent; border: 0; border-radius: 9px; height: 38px; cursor: pointer">Back</button>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="height: 300px; border-radius: 14px; background: #1B2624; display: flex; align-items: center; justify-content: center">
+        <svg width="90" height="190" viewBox="0 0 150 300" fill="none" stroke="#7FA39C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Week 0 photo placeholder"><circle cx="75" cy="30" r="20"/><path d="M45 62 C55 56 95 56 105 62 L118 130 L104 134 L100 100 L98 200 L104 285 L80 285 L75 205 L70 285 L46 285 L52 200 L50 100 L46 134 L32 130 Z"/></svg>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 14px; font-weight: 800">Week 0</span>
+        <span style="background: #E1EFEC; color: #0B463F; border-radius: 8px; padding: 2px 8px; font-size: 12px; font-weight: 800">Good light</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="height: 300px; border-radius: 14px; background: #1B2624; display: flex; align-items: center; justify-content: center">
+        <svg width="90" height="190" viewBox="0 0 150 300" fill="none" stroke="#7FA39C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Week 4 photo placeholder"><circle cx="75" cy="30" r="20"/><path d="M45 62 C55 56 95 56 105 62 L118 130 L104 134 L100 100 L98 200 L104 285 L80 285 L75 205 L70 285 L46 285 L52 200 L50 100 L46 134 L32 130 Z"/></svg>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 14px; font-weight: 800">Week 4</span>
+        <span style="background: #FBEFD9; color: #7A4B00; border-radius: 8px; padding: 2px 8px; font-size: 12px; font-weight: 800">Low light</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 16px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <span style="font-size: 13px; font-weight: 800; color: #5B6763">WHAT WE CAN SEE · ESTIMATE</span>
+      <span style="background: #FBEFD9; color: #7A4B00; border-radius: 8px; padding: 2px 8px; font-size: 12px; font-weight: 800">Low confidence</span>
+    </div>
+    <div style="font-size: 14px; line-height: 1.45; color: #3C4A46">The week 4 photo is darker, so we cannot compare chest shape reliably. Retake in full light to get a fair read.</div>
+    <div style="font-size: 12px; color: #5B6763">Tape says chest +0.4 cm. We trust that more than this photo for now.</div>
+  </div>
+
+  <div style="flex: 1"></div>
+
+  <button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; color: #fff; background: #0E5A52; border: 0; border-radius: 14px; height: 52px; cursor: pointer">Retake week 4 photo</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

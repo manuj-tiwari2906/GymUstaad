@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clean food logging</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F4F5F1; color: #14201E; font-family: 'Manrope', sans-serif">
+<div style="height: 768px; overflow-y: auto; box-sizing: border-box; padding: 24px 20px 20px; display: flex; flex-direction: column; gap: 14px">
+  <h1 style="margin: 0; font-size: 26px; font-weight: 800">Log a meal</h1>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{items}}" as="it" hint-placeholder-count="4">
+      <button type="button" onClick="{{it.pick}}" style="{{it.style}}">{{it.text}}</button>
+    </sc-for>
+  </div>
+
+  <div style="{{dishBox}}">
+    <div style="display: flex; background: #E3E6E0; border-radius: 12px; padding: 4px; gap: 4px">
+      <sc-for list="{{places}}" as="p" hint-placeholder-count="3">
+        <button type="button" onClick="{{p.pick}}" style="{{p.style}}">{{p.text}}</button>
+      </sc-for>
+    </div>
+    <div style="font-size: 13px; font-weight: 800; color: #5B6763">OIL</div>
+    <div style="display: flex; gap: 8px">
+      <sc-for list="{{oils}}" as="o" hint-placeholder-count="3">
+        <button type="button" onClick="{{o.pick}}" style="{{o.style}}">{{o.text}}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="{{weightBox}}">
+    <div style="{{unitRowStyle}}">
+      <div style="font-size: 13px; font-weight: 800; color: #5B6763">HOW DO YOU MEASURE</div>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{units}}" as="u" hint-placeholder-count="2">
+          <button type="button" onClick="{{u.pick}}" style="{{u.style}}">{{u.text}}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="{{formRowStyle}}">
+      <div style="font-size: 13px; font-weight: 800; color: #5B6763">WEIGHED WHEN</div>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{forms}}" as="f" hint-placeholder-count="2">
+          <button type="button" onClick="{{f.pick}}" style="{{f.style}}">{{f.text}}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="{{boneRowStyle}}">
+      <div style="font-size: 13px; font-weight: 800; color: #5B6763">CUT</div>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{bones}}" as="b" hint-placeholder-count="2">
+          <button type="button" onClick="{{b.pick}}" style="{{b.style}}">{{b.text}}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="{{guardStyle}}">{{guardText}}</div>
+  </div>
+
+  <div style="{{countBox}}">
+    <div style="font-size: 13px; font-weight: 800; color: #5B6763">SIZE</div>
+    <div style="display: flex; gap: 8px">
+      <sc-for list="{{sizes}}" as="z" hint-placeholder-count="3">
+        <button type="button" onClick="{{z.pick}}" style="{{z.style}}">{{z.text}}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="font-size: 13px; font-weight: 800; color: #5B6763">{{qtyLabel}}</div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+      <button type="button" onClick="{{minus}}" aria-label="Less" style="width: 52px; height: 52px; border-radius: 14px; border: 1px solid #D5DAD3; background: #fff; font-family: inherit; font-size: 24px; font-weight: 800; color: #14201E; cursor: pointer">−</button>
+      <div style="font-size: 26px; font-weight: 800">{{qtyText}}</div>
+      <button type="button" onClick="{{plus}}" aria-label="More" style="width: 52px; height: 52px; border-radius: 14px; border: 1px solid #D5DAD3; background: #fff; font-family: inherit; font-size: 24px; font-weight: 800; color: #14201E; cursor: pointer">+</button>
+    </div>
+    <div style="font-size: 13px; line-height: 1.4; color: #3C4A46">{{convLine}}</div>
+  </div>
+
+  <div style="background: #fff; border: 1px solid #E3E6E0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <div style="font-size: 12px; font-weight: 700; color: #5B6763">WE WILL LOG</div>
+      <div style="font-size: 28px; font-weight: 800; line-height: 1.1">about {{out.kcal}} kcal</div>
+      <div style="font-size: 14px; color: #3C4A46">Likely range {{out.lo}} to {{out.hi}} · about {{out.fat}} g fat · about {{out.protein}} g protein</div>
+    </div>
+    <div style="background: #FBEFD9; border-radius: 12px; padding: 10px 12px; font-size: 13px; line-height: 1.45; color: #3F2A00">{{out.note}}</div>
+  </div>
+
+  <button type="button" onClick="{{logIt}}" style="{{out.btnStyle}}">{{out.btnText}}</button>
+  <div style="text-align: center; font-size: 12px; color: #5B6763">Placeholder values until the food database is filled</div>
+</div>
+
+  <nav aria-label="Main" style="position: absolute; left: 0; right: 0; bottom: 0; height: 76px; background: #fff; border-top: 1px solid #E3E6E0; display: flex">
+    <a href="Today.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #5B6763; font-size: 12px; font-weight: 700">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg>Today</a>
+    <a href="Plan.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #5B6763; font-size: 12px; font-weight: 700">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Plan</a>
+    <a href="FoodLog.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #0E5A52; font-size: 12px; font-weight: 800">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Log</a>
+    <a href="Progress.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #5B6763; font-size: 12px; font-weight: 700">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Progress</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({ item: 'chole', place: 'restaurant', oil: 'normal', size: 1, unit: 'katori', form: 'cooked', bone: 'boneless', qty: null, logged: false }, this.state || {});
+    const ITEMS = {
+      chole: { text: 'Chole bhature', mode: 'dish' },
+      rice: { text: 'Rice', mode: 'weight' },
+      chicken: { text: 'Chicken', mode: 'weight' },
+      roti: { text: 'Roti', mode: 'count' }
+    };
+    const IK = ['chole', 'rice', 'chicken', 'roti'];
+    const item = ITEMS[st.item] ? st.item : 'chole';
+    const mode = ITEMS[item].mode;
+
+    const BASE = {
+      home: { text: 'Home', k: 620, lo: 520, hi: 760, fat: 24, p: 15, note: 'Home food is the most predictable, because you control the oil.' },
+      dhaba: { text: 'Dhaba', k: 780, lo: 620, hi: 1000, fat: 38, p: 16, note: 'Dhaba food usually has more oil and ghee. We log a typical value and keep the range.' },
+      restaurant: { text: 'Restaurant', k: 700, lo: 550, hi: 950, fat: 30, p: 16, note: 'Restaurant food varies a lot with oil and portion. We log a typical value and keep the range, and your weight trend corrects us over time.' }
+    };
+    const PK = ['home', 'dhaba', 'restaurant'];
+    const OILS = { less: { t: 'Less oil', k: 0.9, f: 0.8 }, normal: { t: 'Normal', k: 1, f: 1 }, extra: { t: 'Extra oil', k: 1.15, f: 1.3 } };
+    const OK = ['less', 'normal', 'extra'];
+    const place = PK.indexOf(st.place) >= 0 ? st.place : 'restaurant';
+    const oil = OILS[st.oil] ? st.oil : 'normal';
+
+    // per 100 g values, placeholders
+    const G = {
+      rice: { cooked: { k: 130, p: 2.7, f: 0.3 }, raw: { k: 360, p: 7, f: 0.6 } },
+      chicken: { cooked: { k: 165, p: 31, f: 3.6 }, raw: { k: 120, p: 23, f: 2.6 } }
+    };
+    const KATORI_G = 150;
+    const SZ = { small: { t: 'Small', v: 0.8 }, medium: { t: 'Medium', v: 1 }, large: { t: 'Large', v: 1.3 } };
+    const SK = ['small', 'medium', 'large'];
+    const size = SK.indexOf(st.size) >= 0 ? st.size : 'medium';
+    const bone = st.bone === 'bone' ? 'bone' : 'boneless';
+
+    const useKatori = item === 'rice' && st.unit === 'katori';
+    const form = useKatori ? 'cooked' : (st.form === 'raw' ? 'raw' : 'cooked');
+    const defQty = mode === 'count' ? 2 : (useKatori ? 1 : (item === 'chicken' ? 150 : 200));
+    const qty = st.qty == null ? defQty : st.qty;
+    const step = mode === 'count' ? 1 : (useKatori ? 1 : 50);
+    const minQ = step;
+    const maxQ = mode === 'count' ? 8 : (useKatori ? 4 : 600);
+
+    const pill = (on) => (on
+      ? 'color: #0B463F; background: #E1EFEC; border: 2px solid #0E5A52; font-weight: 800;'
+      : 'color: #3C4A46; background: #fff; border: 1px solid #D5DAD3; font-weight: 700;')
+      + ' flex: 1; font-family: inherit; font-size: 14px; border-radius: 12px; height: 44px; cursor: pointer';
+    const seg = (on) => on
+      ? 'flex: 1; font-family: inherit; font-size: 14px; font-weight: 800; color: #14201E; background: #fff; border: 0; border-radius: 9px; height: 38px; cursor: pointer'
+      : 'flex: 1; font-family: inherit; font-size: 14px; font-weight: 700; color: #3C4A46; background: transparent; border: 0; border-radius: 9px; height: 38px; cursor: pointer';
+    const box = 'background: #fff; border: 1px solid #E3E6E0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px';
+    const r10 = (n) => Math.round(n / 10) * 10;
+    const set = (o) => () => this.setState(Object.assign({ logged: false }, o));
+
+    let kcal = 0, lo = 0, hi = 0, fat = 0, protein = 0, note = '', convLine = '', qtyLabel = '', qtyText = '', guardText = '';
+    if (mode === 'dish') {
+      const b = BASE[place]; const o = OILS[oil];
+      kcal = r10(b.k * o.k); lo = r10(b.lo * o.k); hi = r10(b.hi * o.k);
+      fat = Math.round(b.fat * o.f); protein = Math.round(b.p); note = b.note;
+      qtyLabel = 'PORTION'; qtyText = qty + (qty === 1 ? ' plate' : ' plates');
+      convLine = 'A plate is one serving as served at the place you chose.';
+    } else if (mode === 'weight') {
+      const g = useKatori ? qty * KATORI_G : qty;
+      let edible = g;
+      if (item === 'chicken' && bone === 'bone') edible = g * 0.65;
+      const v = G[item][form];
+      kcal = r10(v.k * edible / 100); lo = r10(kcal * 0.9); hi = r10(kcal * 1.1);
+      fat = Math.round(v.f * edible / 100); protein = Math.round(v.p * edible / 100);
+      qtyLabel = useKatori ? 'KATORI (COOKED)' : (form === 'raw' ? 'WEIGHT, RAW' : 'WEIGHT, COOKED');
+      qtyText = useKatori ? qty + (qty === 1 ? ' katori' : ' katori') : qty + ' g';
+      if (item === 'rice') {
+        if (form === 'raw' && !useKatori) convLine = qty + ' g raw rice is about ' + Math.round(qty * 2.75) + ' g once cooked. Estimate.';
+        else if (useKatori) convLine = 'One katori is taken as about ' + KATORI_G + ' g cooked rice. Estimate.';
+        else convLine = 'Cooked weight includes the water the rice absorbed.';
+        note = 'Rice calories depend on whether you weigh before or after cooking. We keep the state you pick.';
+      } else {
+        const ed = bone === 'bone' ? ' About 65% of bone-in weight is edible meat, so we count that part. Estimate.' : '';
+        convLine = form === 'raw' ? 'Raw chicken loses water as it cooks, so cooked weight is lower.' + ed : 'Cooked weight, as it sits on your plate.' + ed;
+        note = 'Chicken numbers are for plain meat. Oil and gravy are logged as a dish.';
+      }
+      const small = form === 'cooked' && !useKatori && item === 'rice' && qty <= 100;
+      guardText = small ? 'That is a small amount for cooked rice. Did you weigh it raw? Switch to Raw if so.' : '';
+    } else {
+      const s = SZ[size];
+      kcal = r10(100 * s.v * qty); lo = r10(kcal * 0.85); hi = r10(kcal * 1.2);
+      fat = Math.round(3.5 * s.v * qty); protein = Math.round(3 * s.v * qty);
+      note = 'Roti is counted in pieces, not grams. Ghee on top adds roughly 45 kcal a teaspoon, an estimate.';
+      qtyLabel = 'HOW MANY'; qtyText = qty + (qty === 1 ? ' roti' : ' rotis');
+      convLine = 'No weighing needed. Pick the size that looks like yours.';
+    }
+
+    return {
+      items: IK.map((k) => ({ text: ITEMS[k].text, style: (k === item ? 'background: #0E5A52; color: #fff; border: 0;' : 'background: #fff; color: #3C4A46; border: 1px solid #D5DAD3;') + ' font-family: inherit; font-size: 14px; font-weight: 800; border-radius: 20px; padding: 9px 16px; cursor: pointer', pick: set({ item: k, qty: null, form: 'cooked', unit: 'katori', bone: 'boneless' }) })),
+      dishBox: mode === 'dish' ? box : 'display: none',
+      weightBox: mode === 'weight' ? box : 'display: none',
+      countBox: mode === 'count' ? box : 'display: none',
+      places: PK.map((k) => ({ text: BASE[k].text, style: seg(k === place), pick: set({ place: k }) })),
+      oils: OK.map((k) => ({ text: OILS[k].t, style: pill(k === oil), pick: set({ oil: k }) })),
+      units: [{ k: 'katori', t: 'Katori' }, { k: 'grams', t: 'Grams' }].map((u) => ({ text: u.t, style: pill(u.k === (useKatori ? 'katori' : 'grams')), pick: set({ unit: u.k, qty: null }) })),
+      unitRowStyle: item === 'rice' ? 'display: flex; flex-direction: column; gap: 8px' : 'display: none',
+      forms: [{ k: 'cooked', t: 'Cooked' }, { k: 'raw', t: 'Raw' }].map((f) => ({ text: f.t, style: pill(f.k === form), pick: set({ form: f.k }) })),
+      formRowStyle: useKatori ? 'display: none' : 'display: flex; flex-direction: column; gap: 8px',
+      bones: [{ k: 'boneless', t: 'Boneless' }, { k: 'bone', t: 'Bone-in' }].map((b) => ({ text: b.t, style: pill(b.k === bone), pick: set({ bone: b.k }) })),
+      boneRowStyle: item === 'chicken' ? 'display: flex; flex-direction: column; gap: 8px' : 'display: none',
+      guardText: guardText,
+      guardStyle: guardText ? 'background: #FBEFD9; border: 1px solid #E8A33D; border-radius: 12px; padding: 10px 12px; font-size: 13px; line-height: 1.45; color: #3F2A00; font-weight: 700' : 'display: none',
+      sizes: SK.map((k) => ({ text: SZ[k].t, style: pill(k === size), pick: set({ size: k }) })),
+      qtyLabel: qtyLabel, qtyText: qtyText, convLine: convLine,
+      minus: set({ qty: Math.max(minQ, qty - step) }),
+      plus: set({ qty: Math.min(maxQ, qty + step) }),
+      logIt: () => this.setState({ logged: !st.logged }),
+      out: {
+        kcal: kcal, lo: lo, hi: hi, fat: fat, protein: protein, note: note,
+        btnText: st.logged ? 'Logged. Tap to undo' : 'Log this meal',
+        btnStyle: (st.logged ? 'color: #0B463F; background: #E1EFEC; border: 2px solid #0E5A52;' : 'color: #fff; background: #0E5A52; border: 0;')
+          + ' font-family: inherit; font-size: 16px; font-weight: 800; border-radius: 14px; height: 52px; cursor: pointer'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
