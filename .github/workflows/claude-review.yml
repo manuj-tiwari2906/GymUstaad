@@ -1,0 +1,45 @@
+# Claude reviews every PR when it is opened and on every new push to it.
+# Setup (one time): install the Claude GitHub App on this repo and add ONE of these secrets:
+#   CLAUDE_CODE_OAUTH_TOKEN  (Claude Pro/Max subscription, from `claude setup-token`)
+#   ANTHROPIC_API_KEY        (pay-per-use API key from console.anthropic.com)
+# Only users with write access can trigger the action (see claude-code-action docs/security.md).
+name: Claude review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            You are reviewing a pull request for GymUstaad, a fitness coaching app.
+            Read CLAUDE.md for the product rules and docs/REVIEW.md for the review checklist,
+            then review only the changes in this PR (use `gh pr diff`).
+
+            Report real problems only: bugs, wrong numbers, security/privacy issues, missing tests,
+            and violations of the checklist. Skip style nitpicks that ruff already enforces.
+            For each problem: put an inline comment on the exact line, saying what is wrong,
+            a concrete failing case, and a suggested fix.
+            Finish with ONE summary comment via `gh pr comment`: verdict (approve / changes needed),
+            a short list of findings by severity, and anything you could not verify.
+            Write in simple English; this repo is public.
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
